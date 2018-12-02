@@ -32,11 +32,49 @@ fn solve_part1(input: &[&str]) -> usize {
     return counts.0 * counts.1;
 }
 
+use itertools::Itertools;
+
+fn solve_part2(input: &[&str]) -> String {
+    let (left, right) = input
+        .iter()
+        .cartesian_product(input.iter())
+        .filter(|(left, right)| {
+            let mut has_difference = false;
+            for idx in (0..left.len()) {
+                if left[idx..idx + 1] != right[idx..idx + 1] {
+                    if has_difference {
+                        return false;
+                    }
+                    has_difference = true;
+                }
+            }
+
+            return has_difference;
+        })
+        .nth(1)
+        .unwrap();
+
+    left.chars()
+        .zip(right.chars())
+        .filter(|(lchr, rchr)| lchr == rchr)
+        .map(|(lchr, _)| lchr)
+        .collect::<String>()
+}
+
 pub fn run() {
     println!("day  2, part 1: {:?}", solve_part1(&parse_input(INPUT)));
+    println!("day  2, part 2: {:?}", solve_part2(&parse_input(INPUT)));
 }
 
 #[test]
 fn test_part1() {
     assert_eq!(3952, solve_part1(&parse_input(INPUT)));
+}
+
+#[test]
+fn test_part2() {
+    assert_eq!(
+        "vtnikorkulbfejvyznqgdxpaw",
+        solve_part2(&parse_input(INPUT))
+    );
 }

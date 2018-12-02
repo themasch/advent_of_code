@@ -1,3 +1,5 @@
+extern crate itertools;
+
 mod year_2018;
 
 fn main() {
