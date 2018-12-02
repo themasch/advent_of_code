@@ -2,7 +2,6 @@
 name = "aoc"
 version = "0.1.0"
 authors = ["Mark Schmale <masch@masch.it>"]
-edition = "2018"
 
 [dependencies]
 itertools = "0.7.11"
