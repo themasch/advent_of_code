@@ -8,25 +8,20 @@ fn solve_part1(input: &[&str]) -> usize {
     let counts = input
         .iter()
         .map(|line| {
-            let mut counts: [u8; 26] = [0; 26];
-            line.chars().for_each(|chr| {
+            line.chars().fold([0; 26], |mut counts, chr| {
                 let idx = (chr as u8 - 'a' as u8) as usize;
                 counts[idx] = counts[idx] + 1;
-            });
-
-            counts
+                counts
+            })
         })
         .map(|counts| {
             (
-                counts.iter().find(|&&x| x == 2).is_some(),
-                counts.iter().find(|&&x| x == 3).is_some(),
+                if counts.iter().any(|&x| x == 2) { 1 } else { 0 },
+                if counts.iter().any(|&x| x == 3) { 1 } else { 0 },
             )
         })
-        .fold((0, 0), |acc, (has_twos, has_threes)| {
-            return (
-                acc.0 + if has_twos { 1 } else { 0 },
-                acc.1 + if has_threes { 1 } else { 0 },
-            );
+        .fold((0, 0), |acc, (twos, threes)| {
+            return (acc.0 + twos, acc.1 + threes);
         });
 
     return counts.0 * counts.1;
@@ -35,30 +30,26 @@ fn solve_part1(input: &[&str]) -> usize {
 use itertools::Itertools;
 
 fn solve_part2(input: &[&str]) -> String {
-    let (left, right) = input
+    input
         .iter()
         .cartesian_product(input.iter())
         .filter(|(left, right)| {
-            let mut has_difference = false;
-            for idx in (0..left.len()) {
-                if left[idx..idx + 1] != right[idx..idx + 1] {
-                    if has_difference {
-                        return false;
-                    }
-                    has_difference = true;
-                }
-            }
-
-            return has_difference;
+            left.chars()
+                .zip(right.chars())
+                .filter(|(lchr, rchr)| lchr != rchr)
+                .take(2)
+                .count()
+                == 1
+        })
+        .map(|(left, right)| {
+            left.chars()
+                .zip(right.chars())
+                .filter(|(lchr, rchr)| lchr == rchr)
+                .map(|(lchr, _)| lchr)
+                .collect::<String>()
         })
         .nth(1)
-        .unwrap();
-
-    left.chars()
-        .zip(right.chars())
-        .filter(|(lchr, rchr)| lchr == rchr)
-        .map(|(lchr, _)| lchr)
-        .collect::<String>()
+        .unwrap()
 }
 
 pub fn run() {

@@ -42,17 +42,12 @@ pub fn run() {
     println!("day  1, part 2: {:?}", solve_part2(&parse_input(INPUT)));
 }
 
-#[cfg(test)]
-mod test {
-    use super::*;
-    #[test]
-    pub fn test_part1() {
-        assert_eq!(590, solve_part1(&parse_input(INPUT)));
-    }
+#[test]
+pub fn test_part1() {
+    assert_eq!(590, solve_part1(&parse_input(INPUT)));
+}
 
-    #[test]
-    pub fn test_part2() {
-        assert_eq!(83445, solve_part2(&parse_input(INPUT)));
-    }
-
+#[test]
+pub fn test_part2() {
+    assert_eq!(83445, solve_part2(&parse_input(INPUT)));
 }
