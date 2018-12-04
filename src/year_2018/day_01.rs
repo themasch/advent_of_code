@@ -12,8 +12,7 @@ fn parse_input(input: &str) -> Vec<i32> {
             } else {
                 val
             }
-        })
-        .collect()
+        }).collect()
 }
 
 fn solve_part1(input: &[i32]) -> i32 {

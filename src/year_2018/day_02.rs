@@ -13,14 +13,12 @@ fn solve_part1(input: &[&str]) -> usize {
                 counts[idx] = counts[idx] + 1;
                 counts
             })
-        })
-        .map(|counts| {
+        }).map(|counts| {
             (
                 if counts.iter().any(|&x| x == 2) { 1 } else { 0 },
                 if counts.iter().any(|&x| x == 3) { 1 } else { 0 },
             )
-        })
-        .fold((0, 0), |acc, (twos, threes)| {
+        }).fold((0, 0), |acc, (twos, threes)| {
             return (acc.0 + twos, acc.1 + threes);
         });
 
@@ -40,15 +38,13 @@ fn solve_part2(input: &[&str]) -> String {
                 .take(2)
                 .count()
                 == 1
-        })
-        .map(|(left, right)| {
+        }).map(|(left, right)| {
             left.chars()
                 .zip(right.chars())
                 .filter(|(lchr, rchr)| lchr == rchr)
                 .map(|(lchr, _)| lchr)
                 .collect::<String>()
-        })
-        .nth(1)
+        }).nth(1)
         .unwrap()
 }
 
